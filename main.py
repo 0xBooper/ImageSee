@@ -1,5 +1,6 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QMainWindow, QApplication
+import os
 from styles import getStyles
 
 
@@ -106,7 +107,7 @@ class Main_UI(QMainWindow):
             _translate("MainWindow", "Input the path: "))
 
         self.explorer_open.setToolTip(_translate(
-            "MainWindow", "Click to find in Explorer"))
+            "MainWindow", "Click to find in Explorer. If you manually inputted the path in, it will open that."))
 
         self.explorer_open.setText(_translate(
             "MainWindow", "Open in Explorer"))
@@ -132,7 +133,19 @@ class Main_UI(QMainWindow):
         """Executes when the explorer_open buttons is clicked."""
 
         if not self.lineEdit.text() == "":
-            print(self.lineEdit.text())
+            path = self.lineEdit.text().lower()
+
+            for files in os.walk(path.lower()):
+                for file in files:
+                    if ( 
+                    file.endswith(".png") 
+                    or file.endswith(".bmp") 
+                    or file.endswith(".gif") 
+                    or file.endswith(".jpg")
+                    or file.endswith(".jpeg")
+                    ):
+                        print(file)
+
 
 
 def main():
