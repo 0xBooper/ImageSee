@@ -2,7 +2,7 @@
 A simple and fast Image Viewer written in PyQt5/Qt
 
 # WARNING:
-This program is in  beta. Until v1.0.0 (or the whatever stable version), there will not be a guided installer. For all beta versions (v0.0.0 to v1.0.0), you can download the zip files. Otherwise, you can wait until I make the installer. Plus, v1.0.0 (and above) will be the finished program.
+This program is in  beta. Until v1.0.0 (or the whatever stable version), there will not be a guided installer. For all beta versions (any version that has v0 at the start), you can download the zip files. Otherwise, you can wait until I make the installer. Plus, v1.0.0 (and above) will be the finished program.
 
 # Installation
 **Note:** Support for Mac/Linux may or may not come, due to PyInstaller requiring a machine for each OS. While virtual machines are a thing, it's a hassle to do it every time, and so I won't do it, atleast when I can figure out an automated solution.
