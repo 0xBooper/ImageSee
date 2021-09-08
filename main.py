@@ -1,5 +1,5 @@
-from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5 import QtGui, QtWidgets, QtCore
+from PyQt5.QtWidgets import QListWidgetItem, QMainWindow, QApplication
 import os
 from styles import getStyles
 
@@ -16,6 +16,9 @@ class Main_UI(QMainWindow):
         self.setGeometry(100, 100, 800, 520)
         self.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.setStyleSheet(getStyles("main-window"))
+
+        # Class variables
+        self.images = {}
 
         self.init_ui()
 
@@ -37,6 +40,7 @@ class Main_UI(QMainWindow):
         self.image_label = QtWidgets.QLabel(self.centralwidget)
         self.image_label.setGeometry(QtCore.QRect(400, 0, 391, 491))
         self.image_label.setText("")
+        self.image_label.setScaledContents(True)
         self.image_label.setObjectName("image_label")
 
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -65,7 +69,7 @@ class Main_UI(QMainWindow):
         self.explorer_open.setObjectName("explorer_open")
 
         self.file_selection_layout.addWidget(self.explorer_open)
-        self.image_list = QtWidgets.QListView(self.centralwidget)
+        self.image_list = QtWidgets.QListWidget(self.centralwidget)
         self.image_list.setGeometry(QtCore.QRect(20, 100, 341, 371))
         self.image_list.setObjectName("image_list")
 
@@ -125,27 +129,42 @@ class Main_UI(QMainWindow):
     def init_connections(self):
         """Init the connections for each widget"""
 
+        # self.menuAbout.mousePressEvent(func)
+        # self.menuAbout_PyQt5.mousePressEvent(func)
         self.explorer_open.clicked.connect(self.on_explorer_clicked)
+        self.image_list.itemClicked.connect(self.on_image_list_item_clicked)
 
     # Event triggered functions
 
     def on_explorer_clicked(self):
         """Executes when the explorer_open buttons is clicked."""
+        self.image_label.setVisible(False)
+        self.image_placeholder_label.setVisible(True)
+        self.image_list.clear()
 
         if not self.lineEdit.text() == "":
             path = self.lineEdit.text().lower()
+            # print(f"path: {path}")
+            for file in os.listdir(path):
+                # print(f"unfiltered file: {file}")
 
-            for files in os.walk(path.lower()):
-                for file in files:
-                    if ( 
-                    file.endswith(".png") 
-                    or file.endswith(".bmp") 
-                    or file.endswith(".gif") 
-                    or file.endswith(".jpg")
-                    or file.endswith(".jpeg")
-                    ):
-                        print(file)
+                if file.endswith((".png", ".jpeg", ".jpg", ".gif")):
+                    # print(f"filtered file: {file}")
+                    # print(f"filtered file path: {os.path.join(path, file)}")
 
+                    self.images[file] = os.path.join(path, file)
+
+                    self.image_list.addItem(file)
+
+    def on_image_list_item_clicked(self):
+        """Executes when you click a list item in self.image_list"""
+        self.image_label.setVisible(True)
+
+        path_to_image = self.images[str(self.image_list.currentItem().text())]
+
+        self.image_placeholder_label.setVisible(False)
+        self.image_label.setPixmap(QtGui.QPixmap(path_to_image))
+        self.image_label.adjustSize()
 
 
 def main():
