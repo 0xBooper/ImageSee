@@ -23,10 +23,23 @@ You **_can_** actually use it on Mac/Linux! However, you have to build it manual
 
 If you wanted to build it and package it into a distributable, then:
 
-1. Download the source code (by: `git clone https://github.com/0xBooper/ImageSee.git`)
-2. Download Python 3
+1. Download Python 3 (preferably 3.9.7, or later)
+2. Download the source code (by: `git clone https://github.com/0xBooper/ImageSee.git`)
+   3: Go into the directory. Run: `cd path/to/ImageSee`
 3. Install all dependencies. The project requires only PyQt5, so you can do `pip install pyqt5`
 4. Install PyInstaller, for the build process (by: `pip install pyinstaller`)
-5. Run `pyinstaller ImageSee.spec`
+5. Run `pyinstaller ImageSee.spec`. This may take a while.
+
+Otherwise, if you wanted to just run the python straight: (_not recommended, may be slower_)
+
+1. Download Python 3 (preferably 3.9.7, or later)
+2. Download the source code (by: `git clone https://github.com/0xBooper/ImageSee.git`)
+   3: Go into the directory. Run: `cd path/to/ImageSee`
+3. Install all dependencies. The project requires only PyQt5, so you can do `pip install pyqt5`
+4. Execute the python file. Run: `python main.py`
+
+Remember to change `path/to/` with the actual path.
 
 ---
+
+Happy image viewing!
