@@ -1,4 +1,5 @@
 from PyQt5 import QtGui, QtWidgets, QtCore
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QListWidgetItem, QMainWindow, QApplication
 import os
 from styles import getStyles
@@ -19,6 +20,7 @@ class Main_UI(QMainWindow):
 
         # Class variables
         self.images = {}
+        self.scale_factor = 0.0
 
         self.init_ui()
 
@@ -29,13 +31,13 @@ class Main_UI(QMainWindow):
         self.centralwidget.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.centralwidget.setObjectName("centralwidget")
 
-        self.line = QtWidgets.QFrame(self.centralwidget)
-        self.line.setGeometry(QtCore.QRect(390, 0, 1, 520))
-        self.line.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.line.setStyleSheet(getStyles("v-line"))
-        self.line.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line.setObjectName("line")
+        self.vertical_line = QtWidgets.QFrame(self.centralwidget)
+        self.vertical_line.setGeometry(QtCore.QRect(390, 0, 1, 520))
+        self.vertical_line.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.vertical_line.setStyleSheet(getStyles("v-line"))
+        self.vertical_line.setFrameShape(QtWidgets.QFrame.VLine)
+        self.vertical_line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.vertical_line.setObjectName("vertical_line")
 
         self.image_label = QtWidgets.QLabel(self.centralwidget)
         self.image_label.setGeometry(QtCore.QRect(400, 0, 391, 491))
@@ -43,25 +45,27 @@ class Main_UI(QMainWindow):
         self.image_label.setScaledContents(True)
         self.image_label.setObjectName("image_label")
 
-        self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(20, 10, 341, 51))
-        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+        self.horizontal_layout_widget = QtWidgets.QWidget(self.centralwidget)
+        self.horizontal_layout_widget.setGeometry(
+            QtCore.QRect(20, 10, 341, 51))
+        self.horizontal_layout_widget.setObjectName("horizontal_layout_widget")
 
         self.file_selection_layout = QtWidgets.QHBoxLayout(
-            self.horizontalLayoutWidget)
+            self.horizontal_layout_widget)
         self.file_selection_layout.setContentsMargins(0, 0, 0, 0)
         self.file_selection_layout.setObjectName("file_selection_layout")
 
         self.file_selection_label = QtWidgets.QLabel(
-            self.horizontalLayoutWidget)
+            self.horizontal_layout_widget)
         self.file_selection_label.setObjectName("file_selection_label")
         self.file_selection_layout.addWidget(self.file_selection_label)
 
-        self.lineEdit = QtWidgets.QLineEdit(self.horizontalLayoutWidget)
-        self.lineEdit.setObjectName("lineEdit")
+        self.line_edit = QtWidgets.QLineEdit(self.horizontal_layout_widget)
+        self.line_edit.setObjectName("line_edit")
 
-        self.file_selection_layout.addWidget(self.lineEdit)
-        self.explorer_open = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.file_selection_layout.addWidget(self.line_edit)
+        self.explorer_open = QtWidgets.QPushButton(
+            self.horizontal_layout_widget)
         self.explorer_open.setStyleSheet(getStyles("push-btn"))
         self.explorer_open.setAutoDefault(False)
         self.explorer_open.setDefault(False)
@@ -142,8 +146,8 @@ class Main_UI(QMainWindow):
         self.image_placeholder_label.setVisible(True)
         self.image_list.clear()
 
-        if not self.lineEdit.text() == "":
-            path = self.lineEdit.text().lower()
+        if not self.line_edit.text() == "":
+            path = self.line_edit.text().lower()
             # print(f"path: {path}")
             for file in os.listdir(path):
                 # print(f"unfiltered file: {file}")
@@ -162,9 +166,13 @@ class Main_UI(QMainWindow):
 
         path_to_image = self.images[str(self.image_list.currentItem().text())]
 
+        pixmap = QtGui.QPixmap(path_to_image)
+
+        scaled_pixmap = pixmap.scaled(391, 491, QtCore.Qt.KeepAspectRatio)
+
         self.image_placeholder_label.setVisible(False)
-        self.image_label.setPixmap(QtGui.QPixmap(path_to_image))
-        self.image_label.adjustSize()
+        self.image_label.setPixmap(scaled_pixmap)
+        self.image_label.resize(scaled_pixmap.width(), scaled_pixmap.height())
 
 
 def main():
