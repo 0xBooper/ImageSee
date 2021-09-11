@@ -4,7 +4,7 @@
 block_cipher = None
 
 
-a = Analysis(['main.py'],
+a = Analysis(['src/main.py'],
              pathex=['C:\\Users\\bunso1\\qtpythonstuff\\ImageSee'],
              binaries=[],
              datas=[],
