@@ -148,17 +148,24 @@ class Main_UI(QMainWindow):
 
         if not self.line_edit.text() == "":
             path = self.line_edit.text().lower()
+
             # print(f"path: {path}")
-            for file in os.listdir(path):
-                # print(f"unfiltered file: {file}")
 
-                if file.endswith((".png", ".jpeg", ".jpg", ".gif")):
-                    # print(f"filtered file: {file}")
-                    # print(f"filtered file path: {os.path.join(path, file)}")
+            try:
+                for file in os.listdir(path):
+                    # print(f"unfiltered file: {file}")
 
-                    self.images[file] = os.path.join(path, file)
+                    if file.endswith((".png", ".jpeg", ".jpg", ".gif")):
+                        # print(f"filtered file: {file}")
+                        # print(f"filtered file path: {os.path.join(path, file)}")
 
-                    self.image_list.addItem(file)
+                        self.images[file] = os.path.join(path, file)
+
+                        self.image_list.addItem(file)
+            except FileNotFoundError:
+                    msg_box = QtWidgets.QMessageBox.about(self, "File not found", "No file was found.")
+                    msg_box.setIcon(QMessageBox.Critical)
+                    msg_box.setStandardButtons(QMessageBox.Ok)
 
     def on_image_list_item_clicked(self):
         """Executes when you click a list item in self.image_list"""
