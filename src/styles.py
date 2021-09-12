@@ -8,4 +8,4 @@ def getStyles(style_to_give):
     elif style_to_give == "push-btn":
         return "color: whitesmoke;\n""border: 1px solid #9f9f9f;\n""padding: 3px;\n""border-radius: 1px;"
     else:
-        return TypeError
+        return TypeError("Expected: main-window, or v-line, or push-btn")
