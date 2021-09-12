@@ -1,4 +1,4 @@
-def getStyles(style_to_give):
+def getStyles(style_to_give: str) -> str:
     """Return a style based on the argument type"""
 
     if style_to_give == "main-window":
