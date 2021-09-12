@@ -1,6 +1,6 @@
 from PyQt5 import QtGui, QtWidgets, QtCore
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QListWidgetItem, QMainWindow, QApplication
+from PyQt5.QtWidgets import *
 import os
 from styles import getStyles
 
@@ -27,79 +27,131 @@ class Main_UI(QMainWindow):
     def init_ui(self):
         """Initiate UI"""
 
-        self.centralwidget = QtWidgets.QWidget(self)
-        self.centralwidget.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.centralwidget.setObjectName("centralwidget")
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
+        self.setSizePolicy(sizePolicy)
+        self.setLayoutDirection(Qt.LeftToRight)
+        self.setStyleSheet(u"background-color: #777;\n"
+                           "color: whitesmoke;")
+        self.centralwidget = QWidget(self)
+        self.centralwidget.setObjectName(u"centralwidget")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(
+            self.centralwidget.sizePolicy().hasHeightForWidth())
+        self.centralwidget.setSizePolicy(sizePolicy1)
+        self.centralwidget.setLayoutDirection(Qt.LeftToRight)
+        self.centralwidget.setAutoFillBackground(True)
+        self.horizontalLayout = QHBoxLayout(self.centralwidget)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.image_side_layout = QVBoxLayout()
+        self.image_side_layout.setSpacing(6)
+        self.image_side_layout.setObjectName(u"image_side_layout")
+        self.image_side_layout.setSizeConstraint(QLayout.SetFixedSize)
+        self.file_selection_layout = QHBoxLayout()
+        self.file_selection_layout.setObjectName(u"file_selection_layout")
+        self.file_selection_layout.setContentsMargins(-1, -1, -1, 50)
+        self.file_selection_label = QLabel(self.centralwidget)
+        self.file_selection_label.setObjectName(u"file_selection_label")
+        sizePolicy.setHeightForWidth(
+            self.file_selection_label.sizePolicy().hasHeightForWidth())
+        self.file_selection_label.setSizePolicy(sizePolicy)
 
-        self.vertical_line = QtWidgets.QFrame(self.centralwidget)
-        self.vertical_line.setGeometry(QtCore.QRect(390, 0, 1, 520))
-        self.vertical_line.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.vertical_line.setStyleSheet(getStyles("v-line"))
-        self.vertical_line.setFrameShape(QtWidgets.QFrame.VLine)
-        self.vertical_line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.vertical_line.setObjectName("vertical_line")
-
-        self.image_label = QtWidgets.QLabel(self.centralwidget)
-        self.image_label.setGeometry(QtCore.QRect(400, 0, 391, 491))
-        self.image_label.setText("")
-        self.image_label.setScaledContents(True)
-        self.image_label.setObjectName("image_label")
-
-        self.horizontal_layout_widget = QtWidgets.QWidget(self.centralwidget)
-        self.horizontal_layout_widget.setGeometry(
-            QtCore.QRect(20, 10, 341, 51))
-        self.horizontal_layout_widget.setObjectName("horizontal_layout_widget")
-
-        self.file_selection_layout = QtWidgets.QHBoxLayout(
-            self.horizontal_layout_widget)
-        self.file_selection_layout.setContentsMargins(0, 0, 0, 0)
-        self.file_selection_layout.setObjectName("file_selection_layout")
-
-        self.file_selection_label = QtWidgets.QLabel(
-            self.horizontal_layout_widget)
-        self.file_selection_label.setObjectName("file_selection_label")
         self.file_selection_layout.addWidget(self.file_selection_label)
 
-        self.line_edit = QtWidgets.QLineEdit(self.horizontal_layout_widget)
-        self.line_edit.setObjectName("line_edit")
+        self.line_edit = QLineEdit(self.centralwidget)
+        self.line_edit.setObjectName(u"line-edit")
 
         self.file_selection_layout.addWidget(self.line_edit)
-        self.explorer_open = QtWidgets.QPushButton(
-            self.horizontal_layout_widget)
-        self.explorer_open.setStyleSheet(getStyles("push-btn"))
+
+        self.explorer_open = QPushButton(self.centralwidget)
+        self.explorer_open.setObjectName(u"explorer_open")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(
+            self.explorer_open.sizePolicy().hasHeightForWidth())
+        self.explorer_open.setSizePolicy(sizePolicy2)
+        self.explorer_open.setStyleSheet("push-btn")
+
         self.explorer_open.setAutoDefault(False)
-        self.explorer_open.setDefault(False)
         self.explorer_open.setFlat(True)
-        self.explorer_open.setObjectName("explorer_open")
 
         self.file_selection_layout.addWidget(self.explorer_open)
-        self.image_list = QtWidgets.QListWidget(self.centralwidget)
-        self.image_list.setGeometry(QtCore.QRect(20, 100, 341, 371))
-        self.image_list.setObjectName("image_list")
 
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(20, 80, 131, 16))
-        self.label.setObjectName("label")
+        self.image_side_layout.addLayout(self.file_selection_layout)
 
-        self.image_placeholder_label = QtWidgets.QLabel(self.centralwidget)
-        self.image_placeholder_label.setGeometry(
-            QtCore.QRect(420, 230, 391, 78))
-        self.image_placeholder_label.setObjectName("image_placeholder_label")
+        self.image_list_descriptor = QLabel(self.centralwidget)
+        self.image_list_descriptor.setObjectName(u"image_list_descriptor")
+        sizePolicy2.setHeightForWidth(
+            self.image_list_descriptor.sizePolicy().hasHeightForWidth())
+        self.image_list_descriptor.setSizePolicy(sizePolicy2)
+
+        self.image_side_layout.addWidget(self.image_list_descriptor)
+
+        self.image_list = QListWidget(self.centralwidget)
+        self.image_list.setObjectName(u"image_list")
+
+        self.image_side_layout.addWidget(self.image_list)
+
+        self.horizontalLayout.addLayout(self.image_side_layout)
+
+        self.vertical_line = QFrame(self.centralwidget)
+        self.vertical_line.setObjectName(u"vertical_line")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(
+            self.vertical_line.sizePolicy().hasHeightForWidth())
+        self.vertical_line.setSizePolicy(sizePolicy3)
+        self.vertical_line.setLayoutDirection(Qt.LeftToRight)
+        self.vertical_line.setStyleSheet(u"background-color: black;")
+        self.vertical_line.setFrameShape(QFrame.VLine)
+        self.vertical_line.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout.addWidget(self.vertical_line)
+
+        self.image_placeholder_label = QLabel(self.centralwidget)
+        self.image_placeholder_label.setObjectName(u"image_placeholder_label")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(
+            self.image_placeholder_label.sizePolicy().hasHeightForWidth())
+        self.image_placeholder_label.setSizePolicy(sizePolicy4)
+
+        self.horizontalLayout.addWidget(self.image_placeholder_label)
+
+        self.image_label = QLabel(self.centralwidget)
+        self.image_label.setObjectName(u"image_label")
+        sizePolicy1.setHeightForWidth(
+            self.image_label.sizePolicy().hasHeightForWidth())
+        self.image_label.setSizePolicy(sizePolicy1)
+        self.image_label.setStyleSheet(u"text-align: center;")
+
+        self.horizontalLayout.addWidget(self.image_label)
+
         self.setCentralWidget(self.centralwidget)
-
-        self.menubar = QtWidgets.QMenuBar(self)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
-        self.menubar.setObjectName("menubar")
-
-        self.menuAbout = QtWidgets.QMenu(self.menubar)
-        self.menuAbout.setObjectName("menuAbout")
-
-        self.menuAbout_PyQt5 = QtWidgets.QMenu(self.menubar)
-        self.menuAbout_PyQt5.setObjectName("menuAbout_PyQt5")
-
+        self.menubar = QMenuBar(self)
+        self.menubar.setObjectName(u"menubar")
+        self.menubar.setGeometry(0, 0, 800, 21)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(
+            self.menubar.sizePolicy().hasHeightForWidth())
+        self.menubar.setSizePolicy(sizePolicy5)
+        self.menu_about_PyQt5 = QMenu(self.menubar)
+        self.menu_about_PyQt5.setObjectName(u"menu_about_PyQt5")
+        self.menu_about = QMenu(self.menubar)
+        self.menu_about.setObjectName(u"menu_about")
         self.setMenuBar(self.menubar)
-        self.menubar.addAction(self.menuAbout.menuAction())
-        self.menubar.addAction(self.menuAbout_PyQt5.menuAction())
+
+        self.menubar.addAction(self.menu_about.menuAction())
+        self.menubar.addAction(self.menu_about_PyQt5.menuAction())
 
         self.init_text()
         self.init_connections()
@@ -109,7 +161,7 @@ class Main_UI(QMainWindow):
 
         _translate = QtCore.QCoreApplication.translate
 
-        self.setWindowTitle(_translate("MainWindow", "ImageSee"))
+        self.setWindowTitle(_translate("self", "ImageSee"))
 
         self.file_selection_label.setText(
             _translate("MainWindow", "Input the path: "))
@@ -120,15 +172,15 @@ class Main_UI(QMainWindow):
         self.explorer_open.setText(_translate(
             "MainWindow", "Open in Explorer"))
 
-        self.label.setText(_translate(
+        self.image_list_descriptor.setText(_translate(
             "MainWindow", "Images found will go here."))
 
         self.image_placeholder_label.setText(
             _translate("MainWindow", "Image goes here..."))
 
-        self.menuAbout.setTitle(_translate("MainWindow", "About"))
+        self.menu_about.setTitle(_translate("MainWindow", "About"))
 
-        self.menuAbout_PyQt5.setTitle(_translate("MainWindow", "About PyQt5"))
+        self.menu_about_PyQt5.setTitle(_translate("MainWindow", "About PyQt5"))
 
     def init_connections(self):
         """Init the connections for each widget"""
