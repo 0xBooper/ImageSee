@@ -33,8 +33,7 @@ class Main_UI(QMainWindow):
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
         self.setLayoutDirection(Qt.LeftToRight)
-        self.setStyleSheet(u"background-color: #777;\n"
-                           "color: whitesmoke;")
+        self.setStyleSheet(getStyles("main-window"))
         self.centralwidget = QWidget(self)
         self.centralwidget.setObjectName(u"centralwidget")
         sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -108,7 +107,7 @@ class Main_UI(QMainWindow):
             self.vertical_line.sizePolicy().hasHeightForWidth())
         self.vertical_line.setSizePolicy(sizePolicy3)
         self.vertical_line.setLayoutDirection(Qt.LeftToRight)
-        self.vertical_line.setStyleSheet(u"background-color: black;")
+        self.vertical_line.setStyleSheet(getStyles("v-line"))
         self.vertical_line.setFrameShape(QFrame.VLine)
         self.vertical_line.setFrameShadow(QFrame.Sunken)
 
