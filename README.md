@@ -17,7 +17,7 @@ This program is in beta. Until v1.0.0 (or the whatever stable version), there wi
 3. Unzip it.
 4. Run the exe file.
 
-## For Mac/Linux users:
+## For Mac/Linux users (**not tested**):
 
 You **_can_** actually use it on Mac/Linux! However, you have to build it manually.
 
